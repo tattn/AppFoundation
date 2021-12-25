@@ -12,6 +12,8 @@ let package = Package(
         .target(name: "AppUIComponent"),
         .target(name: "AppData"),
         .testTarget(name: "AppDataTests", dependencies: ["AppData"]),
+        .target(name: "AppEntity"),
+        .testTarget(name: "AppEntityTests", dependencies: ["AppEntity"]),
     ]
 )
 
