@@ -47,4 +47,5 @@ extension UserDefaults.Key: ExpressibleByStringLiteral {
 public extension UserDefaults.Key {
     typealias Key = UserDefaults.Key
     static var appLaunchCount: Key<Int> { "af_appLaunchCount" }
+    static var lastAppLaunchDate: Key<Date> { "af_lastAppLaunchDate" }
 }

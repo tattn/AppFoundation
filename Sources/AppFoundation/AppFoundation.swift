@@ -12,6 +12,7 @@ public enum AppFoundation {
     public static func configure(with configuration: Configuration = .init()) {
         let defaults = UserDefaults.standard
         defaults.set((defaults.value(for: .appLaunchCount) ?? 0) + 1, for: .appLaunchCount)
+        defaults.set(Date(), for: .lastAppLaunchDate)
     }
     
     public struct Configuration {
