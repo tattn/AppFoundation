@@ -8,8 +8,8 @@
 import Foundation
 
 public extension UserDefaults {
-    func value<T>(for key: Key<T>) -> T? {
-        object(forKey: key.rawValue) as? T
+    func value<T>(for key: Key<T>) -> T {
+        object(forKey: key.rawValue) as? T ?? key.defaultValue()
     }
 
     func set<T>(_ value: T, for key: Key<T>) {
@@ -22,30 +22,25 @@ public extension UserDefaults {
 }
 
 public extension UserDefaults {
-    struct Key<Value>: RawRepresentable {
+    struct Key<Value: Sendable>: Sendable {
         public let rawValue: String
-        public init(rawValue: String) {
+        public let defaultValue: @Sendable () -> Value
+
+        public init(_ rawValue: String, default defaultValue: @Sendable @autoclosure @escaping () -> Value) {
             self.rawValue = rawValue
+            self.defaultValue = defaultValue
         }
     }
 }
 
-extension UserDefaults.Key: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    public init(extendedGraphemeClusterLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    public init(unicodeScalarLiteral value: String) {
-        self.init(rawValue: value)
+public extension UserDefaults.Key<Int> {
+    static var appLaunchCount: Self {
+        .init("af_appLaunchCount", default: 0)
     }
 }
 
-public extension UserDefaults.Key {
-    typealias Key = UserDefaults.Key
-    static var appLaunchCount: Key<Int> { "af_appLaunchCount" }
-    static var lastAppLaunchDate: Key<Date> { "af_lastAppLaunchDate" }
+public extension UserDefaults.Key<Date?> {
+    static var lastAppLaunchDate: Self {
+        .init("af_lastAppLaunchDate", default: nil)
+    }
 }

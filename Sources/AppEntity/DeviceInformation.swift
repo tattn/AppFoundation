@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 #endif
 
-public struct DeviceInformation {
+public struct DeviceInformation: Sendable {
     public let os: String
     public let device: String
     public let appVersion: String
     public let language: String
-    
+
+    @MainActor
     public init() {
         #if canImport(UIKit)
         os = "iOS \(UIDevice.current.systemVersion)"
@@ -24,7 +25,7 @@ public struct DeviceInformation {
         #endif
         device = Self.deviceName()
         appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-        language = Locale.current.languageCode ?? "Unknown"
+        language = Locale.current.language.languageCode?.identifier ?? "Unknown"
     }
     
     private static func deviceName() -> String {

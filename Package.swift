@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "AppFoundation",
     defaultLocalization: "en",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v16)],
     targets: [
         .target(name: "AppFoundation", dependencies: ["AppData"]),
         .target(name: "AppUIComponent"),
